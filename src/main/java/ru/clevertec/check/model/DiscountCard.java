@@ -1,4 +1,4 @@
-package ru.clevertec.check;
+package ru.clevertec.check.model;
 
 import lombok.*;
 

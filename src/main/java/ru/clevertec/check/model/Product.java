@@ -1,4 +1,4 @@
-package ru.clevertec.check;
+package ru.clevertec.check.model;
 
 import lombok.*;
 
@@ -13,5 +13,6 @@ public class Product {
     private int id;
     private String description;
     private BigDecimal price;
+    private int quantityInStock;
     private boolean isWholesale;
 }
