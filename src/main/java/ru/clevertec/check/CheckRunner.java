@@ -17,8 +17,3 @@ public class CheckRunner {
 		checkService.generateReceipt(args);
 	}
 }
-/**
- * пример запуска
- * gradle build
- * java -cp build/classes/java/main ru.clevertec.check.CheckRunner 3-1 2-1 4-1
-**/
