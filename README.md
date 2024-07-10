@@ -29,13 +29,17 @@
    Используйте следующую команду для запуска приложения:
 
     ```sh
-    java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java id-quantity discountCard=xxxx balanceDebitCard=xxxx
+    java -cp build/classes/java/main ru.clevertec.check.CheckRunner id-quantity discountCard=xxxx balanceDebitCard=xxxx
     ```
 
    Где:
     - `id-quantity` - номер товара и его количество
     - `discountCard=xxxx` - номер дисконтной карты
     - `balanceDebitCard=xxxx` - баланс на расчётной карте
+    
+   **Для задания 2**
+   - `pathToFile=xxxx` - путь + название файла с расширением, где хранятся продукты
+   - `saveToFile=xxxx` - путь + название файла с расширением для сохранения
 
    #### Пример запуска
 
@@ -45,54 +49,4 @@
 
 Надеюсь, эта инструкция поможет вам запустить приложение. Если у вас возникнут вопросы, пожалуйста, свяжитесь со мной по указанной ниже почте.
 
-Почта для связи: [shkabaraw@gmail.com](mailto:shkabaraw@gmail.com)
-
-
-# Instructions for Running the Console Application for Generating Store Receipts
-
-1. **Download the Project**
-
-   Use the command line (or terminal) and run the following command to download the project:
-
-    ```sh
-    git clone -b feature/entry-core https://github.com/ShkabaraVV/clevertec-check.git
-    ```
-
-2. **Navigate to the Project Directory**
-
-   Use the terminal and the `cd` command to navigate to the project directory, depending on its location on your computer. It is highly recommended to create a folder beforehand for easier navigation:
-
-    ```sh
-    cd folder-name (without hyphens)
-    ```
-
-3. **Build the Application**
-
-   Run the following command to build the application:
-
-    ```sh
-    .\gradlew build
-    ```
-
-4. **Run the Application**
-
-   Use the following command to run the application:
-
-    ```sh
-    java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java id-quantity discountCard=xxxx balanceDebitCard=xxxx
-    ```
-
-   Where:
-    - `id-quantity` - product ID and quantity
-    - `discountCard=xxxx` - discount card with its number
-    - `balanceDebitCard=xxxx` - balance on the debit card account
-
-   #### Example
-
-    ```sh
-    java -cp build/classes/java/main ru.clevertec.check.CheckRunner 3-5 2-3 4-1 discountCard=1111 balanceDebitCard=100
-    ```
-
-I hope this guide helps you run the application. If you have any questions, please contact me at the email below.
-
-Contact email: [shkabaraw@gmail.com](mailto:shkabaraw@gmail.com)
+Почта для связи: [shkabaraw@gmail.com](https://mail.google.com/mail/u/0/?view=cm&fs=1&to=shkabaraw@gmail.com)
