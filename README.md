@@ -1,11 +1,18 @@
 # Инструкция по запуску консольного приложения для формирования чека в магазине
-
+## Реализовано 
+   #### Генерация чека в форматы:
+    - .pdf
+    - .csv
+    - .xlsx
+    - .docx
+   #### Стек технологий для реализации:
+   Apache POI, Itextpdf.
 1. **Скачать проект**
 
    Используйте командную строку (или терминал) и выполните следующую команду для скачивания проекта:
 
     ```sh
-    git clone -b feature/entry-database https://github.com/ShkabaraVV/clevertec-check.git
+    git clone -b feature/custom https://github.com/ShkabaraVV/clevertec-check.git
     ```
 
 2. **Перейти в директорию проекта**
@@ -35,7 +42,7 @@
     - `id-quantity` - номер товара и его количество
     - `discountCard=xxxx` - номер дисконтной карты
     - `balanceDebitCard=xxxx` - баланс на расчётной карте
-    - `saveToFile=xxxx` - путь + название файла с расширением для сохранениия
+    - `saveToFile=xxxx` - путь + название файла с расширением для сохранениия (csv, pdf, xlsx, docx)
     - `datasource.url=хххx` - url к базе данных 
     - `datasource.username=хххx` - имя пользователя
     - `datasource.password=хххx` - пароль
@@ -44,7 +51,7 @@
    #### Пример запуска
 
    ```sh
-    java -jar build/libs/check-all.jar 1-1 discountCard=3333 balanceDebitCard=100 saveToFile=./result.csv datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=postgres
+    java -jar build/libs/check-all.jar 1-1 discountCard=3333 balanceDebitCard=100 saveToFile=./result111.pdf datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=postgres
    ```
 
 Надеюсь, эта инструкция поможет вам запустить приложение. Если у вас возникнут вопросы, пожалуйста, свяжитесь со мной по указанной ниже почте.

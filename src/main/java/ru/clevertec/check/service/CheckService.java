@@ -1,5 +1,16 @@
 package ru.clevertec.check.service;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import ru.clevertec.check.model.DiscountCard;
 import ru.clevertec.check.model.Product;
 import ru.clevertec.check.exception.BadRequestException;
@@ -9,8 +20,7 @@ import ru.clevertec.check.strategy.DiscountCardStrategy;
 import ru.clevertec.check.strategy.DiscountStrategy;
 import ru.clevertec.check.strategy.WholesaleDiscountStrategy;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -152,6 +162,72 @@ public class CheckService {
             writer.append(receipt);
         } catch (IOException e) {
             throw new InternalServerErrorException("INTERNAL SERVER ERROR ", e);
+        }
+        try {
+            if (saveToFile.endsWith(".xlsx")) {
+                saveToExcel(receipt.toString(), saveToFile);
+            } else if (saveToFile.endsWith(".pdf")) {
+                saveToPDF(receipt.toString(), saveToFile);
+            } else if (saveToFile.endsWith(".docx")) {
+                saveToWord(receipt.toString(), saveToFile);
+            } else {
+                throw new IllegalArgumentException("Unsupported file format: " + saveToFile);
+            }
+        } catch (IOException e) {
+            throw new InternalServerErrorException("Error saving file: " + e.getMessage(), e);
+        }
+    }
+
+    private void saveToExcel(String data, String saveToFile) throws IOException {
+        // Implement saving to Excel using Apache POI
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Receipt");
+
+        String[] lines = data.split("\n");
+        int rowNum = 0;
+        for (String line : lines) {
+            Row row = sheet.createRow(rowNum++);
+            String[] fields = line.split(";");
+            int colNum = 0;
+            for (String field : fields) {
+                row.createCell(colNum++).setCellValue(field);
+            }
+        }
+
+        try (FileOutputStream outputStream = new FileOutputStream(saveToFile)) {
+            workbook.write(outputStream);
+        }
+    }
+
+    private void saveToPDF(String data, String saveToFile) throws IOException {
+        // Implement saving to PDF using iText
+        PdfDocument pdfDocument = new PdfDocument(new PdfWriter(saveToFile));
+        Document document = new Document(pdfDocument);
+
+        // Parse the data and add to PDF document
+        BufferedReader reader = new BufferedReader(new StringReader(data));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            document.add(new Paragraph(line));
+        }
+
+        document.close();
+    }
+
+    private void saveToWord(String data, String saveToFile) throws IOException {
+        // Implement saving to Word using Apache POI
+        XWPFDocument document = new XWPFDocument();
+        XWPFParagraph paragraph = document.createParagraph();
+
+        String[] lines = data.split("\n");
+        for (String line : lines) {
+            XWPFRun run = paragraph.createRun();
+            run.setText(line);
+            run.addBreak();
+        }
+
+        try (FileOutputStream outputStream = new FileOutputStream(saveToFile)) {
+            document.write(outputStream);
         }
     }
 
