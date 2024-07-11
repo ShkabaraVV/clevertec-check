@@ -7,14 +7,12 @@ import ru.clevertec.check.service.ProductService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CheckRunner {
-
     public static void main(String[] args) {
         String saveToFile = "result.csv";
         String dbUrl = null;
@@ -37,10 +35,7 @@ public class CheckRunner {
             System.err.println("Database connection parameters are missing.");
             return;
         }
-
         DatabaseConnection dbConnection = new DatabaseConnection(dbUrl, dbUsername, dbPassword);
-
-        // Execute DDL and DML from file
         executeSqlFromFile(dbConnection, "src/main/resources/data.sql");
 
         ProductService productService = new ProductService(dbConnection);

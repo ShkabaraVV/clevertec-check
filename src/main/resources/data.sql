@@ -35,3 +35,9 @@ VALUES
 ('Whiskey Jim Beam 1l', 13.99, 30, false),
 ('Whiskey Jack Daniels 1l', 17.19, 20, false);
 
+INSERT INTO public.discount_card (number, amount)
+VALUES
+(1111, 3),
+(2222, 3),
+(3333, 4),
+(4444, 5);

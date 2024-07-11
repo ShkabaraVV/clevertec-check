@@ -20,7 +20,7 @@
    Запустите следующую команду для сборки приложения:
 
     ```sh
-    .\gradlew build
+    ./gradlew build shadowJar
     ```
 
 4. **Запуск приложения**
@@ -28,7 +28,7 @@
    Используйте следующую команду для запуска приложения:
 
     ```sh
-    java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java id-quantity discountCard=xxxx balanceDebitCard=xxxx saveToFile=xxxx datasource.url=хххx datasource.username=хххx datasource.password=хххx
+    java -jar build/libs/check-all.jar id-quantity discountCard=xxxx balanceDebitCard=xxxx saveToFile=xxxx datasource.url=хххx datasource.username=хххx datasource.password=хххx
     ```
 
    Где:
@@ -44,7 +44,7 @@
    #### Пример запуска
 
    ```sh
-    java -cp build/classes/java/main ru.clevertec.check.CheckRunner 3-5 2-3 4-1 discountCard=1111 balanceDebitCard=100 saveToFile=./error_result.csv datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=postgres
+    java -jar build/libs/check-all.jar 1-1 discountCard=3333 balanceDebitCard=100 saveToFile=./result.csv datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=postgres
    ```
 
 Надеюсь, эта инструкция поможет вам запустить приложение. Если у вас возникнут вопросы, пожалуйста, свяжитесь со мной по указанной ниже почте.

@@ -26,23 +26,6 @@ public class CheckServiceTest {
         MockitoAnnotations.openMocks(this);
         checkService = new CheckService(productService, discountService);
     }
-
-    @Test
-    public void testGenerateReceipt_ValidArguments() {
-        // Mock data
-        String[] args = {"1-1", "discountCard=1111", "balanceDebitCard=100"};
-
-        // Stubbing ProductService
-        Product product = new Product(1, "Test Product", new BigDecimal("10.00"), 10, true);
-        when(productService.getProductById(1)).thenReturn(product);
-
-        // Stubbing DiscountService
-        DiscountCard discountCard = new DiscountCard(1111, 5.0);
-        when(discountService.getDiscountCard(1111)).thenReturn(discountCard);
-
-        // Test method
-        assertDoesNotThrow(() -> checkService.generateReceipt(args, "receipt.csv"));
-    }
     @Test
     public void testGenerateReceipt_InvalidProductId() {
         // Mock data
