@@ -5,8 +5,6 @@ import ru.clevertec.check.model.Product;
 import ru.clevertec.check.exception.BadRequestException;
 import ru.clevertec.check.exception.InternalServerErrorException;
 import ru.clevertec.check.exception.NotEnoughMoneyException;
-import ru.clevertec.check.service.DiscountService;
-import ru.clevertec.check.service.ProductService;
 import ru.clevertec.check.strategy.DiscountCardStrategy;
 import ru.clevertec.check.strategy.DiscountStrategy;
 import ru.clevertec.check.strategy.WholesaleDiscountStrategy;
@@ -34,17 +32,17 @@ public class CheckService {
         this.discountStrategies.add(new WholesaleDiscountStrategy());
     }
 
-    public void generateReceipt(String[] args) {
+    public void generateReceipt(String[] args, String saveToFile) {
         try {
             Map<Product, Integer> products = parseArguments(args);
             BigDecimal balanceDebitCard = getBalanceDebitCard(args);
             DiscountCard discountCard = getDiscountCard(args);
 
-            generateAndPrintReceipt(products, balanceDebitCard, discountCard);
+            generateAndPrintReceipt(products, balanceDebitCard, discountCard, saveToFile);
         } catch (BadRequestException | NotEnoughMoneyException e) {
-            System.err.println("Error: " + e.getMessage());
+            handleException(e.getMessage(), saveToFile);
         } catch (InternalServerErrorException e) {
-            System.err.println("INTERNAL SERVER ERROR: " + e.getMessage());
+            handleException("INTERNAL SERVER ERROR: " + e.getMessage(), saveToFile);
         }
     }
 
@@ -100,7 +98,7 @@ public class CheckService {
         return null;
     }
 
-    private void generateAndPrintReceipt(Map<Product, Integer> products, BigDecimal balanceDebitCard, DiscountCard discountCard) {
+    private void generateAndPrintReceipt(Map<Product, Integer> products, BigDecimal balanceDebitCard, DiscountCard discountCard, String saveToFile) {
         BigDecimal total = BigDecimal.ZERO;
         BigDecimal totalDiscount = BigDecimal.ZERO;
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -150,11 +148,18 @@ public class CheckService {
         System.out.println(receipt.toString());
 
         // Запись в CSV
-        String fileName = "result.csv";
-        try (FileWriter writer = new FileWriter(fileName)) {
+        try (FileWriter writer = new FileWriter(saveToFile)) {
             writer.append(receipt);
         } catch (IOException e) {
             throw new InternalServerErrorException("INTERNAL SERVER ERROR ", e);
+        }
+    }
+
+    private void handleException(String errorMessage, String saveToFile) {
+        try (FileWriter writer = new FileWriter(saveToFile)) {
+            writer.write(errorMessage);
+        } catch (IOException e) {
+            System.err.println("INTERNAL SERVER ERROR: " + e.getMessage());
         }
     }
 }

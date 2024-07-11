@@ -1,10 +1,7 @@
 package ru.clevertec.check.service;
 
-import ru.clevertec.check.reader.CSVReader;
 import ru.clevertec.check.model.DiscountCard;
 import ru.clevertec.check.reader.DiscountCardCSVReader;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class DiscountService {
