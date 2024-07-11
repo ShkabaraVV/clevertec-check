@@ -5,7 +5,7 @@
    Используйте командную строку (или терминал) и выполните следующую команду для скачивания проекта:
 
     ```sh
-    git clone -b feature/entry-file https://github.com/ShkabaraVV/clevertec-check.git
+    git clone -b feature/entry-database https://github.com/ShkabaraVV/clevertec-check.git
     ```
 
 2. **Перейти в директорию проекта**
@@ -15,15 +15,7 @@
     ```sh
     cd имя-папки (без тире)
     ```
-3. **Создание файла проуктов**
-
-   Создайте csv-файл для хранения продуктов в заданом формате:
-   ```sh
-   id;description;price;quantity_in_stock;wholesale_product
-   1;Milk;1.07;10;true
-   2;Cream 400g;2.71;20;true
-   ```
-4. **Сборка приложения**
+3. **Сборка приложения**
 
    Запустите следующую команду для сборки приложения:
 
@@ -31,26 +23,29 @@
     .\gradlew build
     ```
 
-5. **Запуск приложения**
+4. **Запуск приложения**
 
    Используйте следующую команду для запуска приложения:
 
     ```sh
-    java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java id-quantity discountCard=xxxx balanceDebitCard=xxxx
+    java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java id-quantity discountCard=xxxx balanceDebitCard=xxxx saveToFile=xxxx datasource.url=хххx datasource.username=хххx datasource.password=хххx
     ```
 
    Где:
     - `id-quantity` - номер товара и его количество
     - `discountCard=xxxx` - номер дисконтной карты
     - `balanceDebitCard=xxxx` - баланс на расчётной карте
-    - `pathToFile=xxxx` - путь + название файла с расширением, в котором хранятся продукты
-    - `saveToFile=xxxx` - путь + название файла с расширением для сохранениия 
+    - `saveToFile=xxxx` - путь + название файла с расширением для сохранениия
+    - `datasource.url=хххx` - url к базе данных 
+    - `datasource.username=хххx` - имя пользователя
+    - `datasource.password=хххx` - пароль
+
 
    #### Пример запуска
 
-    ```sh
-    java -cp build/classes/java/main ru.clevertec.check.CheckRunner 3-5 2-3 4-1 discountCard=1111 balanceDebitCard=100 saveToFile=./error_result.csv
-    ```
+   ```sh
+    java -cp build/classes/java/main ru.clevertec.check.CheckRunner 3-5 2-3 4-1 discountCard=1111 balanceDebitCard=100 saveToFile=./error_result.csv datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=postgres
+   ```
 
 Надеюсь, эта инструкция поможет вам запустить приложение. Если у вас возникнут вопросы, пожалуйста, свяжитесь со мной по указанной ниже почте.
 
